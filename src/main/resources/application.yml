@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: repository-ranking
+  mvc:
+    problemdetails:
+      enabled: true
+  cloud:
+    openfeign:
+      client:
+        config:
+          github-search-api:
+            url: ${GITHUB_SEARCH_API_BASE_URL}
+            connect-timeout: ${GITHUB_SEARCH_API_CONNECT_TIMEOUT:2000}
+            read-timeout: ${GITHUB_SEARCH_API_READ_TIMEOUT:4000}
+            logger-level: ${GITHUB_SEARCH_API_LOG_LEVEL:BASIC}
+            default-request-headers:
+              - Accept: application/vnd.github+json
+              - X-GitHub-Api-Version: ${GITHUB_SEARCH_API_VERSION:2022-11-28}
+              - User-Agent: ${spring.application.name}
+              - Authorization: Bearer ${GITHUB_SEARCH_API_ACCESS_TOKEN} # Could configure Spring Security to get an application-token
+
+springdoc:
+  show-actuator: true
+  cache:
+    disabled: true
+  swagger-ui:
+    display-request-duration: true
+    default-models-expand-depth: -1
+    operationsSorter: alpha
+  writer-with-default-pretty-printer: true
+  writer-with-order-by-keys: true
+
+logging:
+  exception-conversion-word: "%wEx"
+  level:
+    com.eduducer.repositoryranking.adapter.outbound.github: DEBUG
+    org.springframework.web: ${APP_SPRING_WEB_LOGGING_LEVEL:INFO}
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m %clr(%marker){blue}%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %m %marker%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"
