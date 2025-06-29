@@ -4,6 +4,8 @@ spring:
   mvc:
     problemdetails:
       enabled: true
+  cache:
+    type: none
   cloud:
     openfeign:
       client:

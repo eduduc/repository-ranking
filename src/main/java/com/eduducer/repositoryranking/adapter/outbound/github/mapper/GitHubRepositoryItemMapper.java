@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 )
 public abstract class GitHubRepositoryItemMapper {
 
+  @SuppressWarnings("java:S6813") //Field injection is the only way to inject beans in MapStruct mappers
   @Autowired
   protected RepositoryPopularityCalculator<GitHubRepositoryItem, Popularity> popularityCalculator;
 
