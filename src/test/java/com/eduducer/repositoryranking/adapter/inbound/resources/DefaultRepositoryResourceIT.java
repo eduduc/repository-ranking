@@ -46,6 +46,8 @@ class DefaultRepositoryResourceIT {
 
       stubFor(get(urlPathEqualTo("/search/repositories"))
           .withQueryParam("q", matching("^language:[A-Za-z]+(?: created:>\\d{4}-\\d{2}-\\d{2})?$"))
+          .withQueryParam("per_page", matching("^\\d{1,3}$"))
+          .withQueryParam("page", matching("^\\d{1,3}$"))
           .withHeader("X-GitHub-Api-Version", equalTo("2022-11-28"))
           .withHeader("User-Agent", equalTo("repository-ranking"))
           .willReturn(aResponse()
@@ -76,6 +78,8 @@ class DefaultRepositoryResourceIT {
           .withQueryParam("q", matching("^language:[A-Za-z]+(?: created:>\\d{4}-\\d{2}-\\d{2})?$"))
           .withHeader("X-GitHub-Api-Version", equalTo("2022-11-28"))
           .withHeader("User-Agent", equalTo("repository-ranking"))
+          .withQueryParam("per_page", matching("^\\d{1,3}$"))
+          .withQueryParam("page", matching("^\\d{1,3}$"))
           .willReturn(aResponse()
               .withStatus(200)
               .withHeader(HttpHeaders.CONTENT_TYPE, "application/vnd.github+json")

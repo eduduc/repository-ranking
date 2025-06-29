@@ -7,7 +7,10 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
 import java.time.LocalDate;
 import org.springframework.http.MediaType;
 
@@ -50,6 +53,16 @@ public interface RepositoryResource {
           required = true,
           example = "2023-01-01",
           schema = @Schema(implementation = LocalDate.class))
-      final LocalDate createdAfter
+      final LocalDate createdAfter,
+      @Parameter(
+          description = "The number of repositories to retrieve per page", example = "30",
+          schema = @Schema(implementation = Integer.class, maximum = "100", minimum = "1", defaultValue = "30")
+      )
+      @Positive @Max(value = 100) @Min(value = 1) final int pageSize,
+      @Parameter(
+          description = "The page number", example = "1",
+          schema = @Schema(implementation = Integer.class, defaultValue = "1")
+      )
+      @Positive final int page
   );
 }

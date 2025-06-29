@@ -17,12 +17,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface GitHubSearchApiClient {
 
   String QUERY_PARAMETER = "q";
+  String PER_PAGE_PARAMETER = "per_page";
+  String PAGE_PARAMETER = "page";
 
   @SuppressWarnings("java:S7180") //Suppressed due to @Cacheable use on Feign client interfaces is recommended by Spring
-  @Cacheable(cacheNames = "github-repositories-cache", key = "#searchQuery")
+  @Cacheable(
+      cacheNames = "github-repositories-cache",
+      key = "T(java.util.Objects).hash(#searchQuery, #pageSize, #page)"
+  )
   @Retry(name = "gitHubRepositorySearchApi")
   @GetMapping(value = "/search/repositories", produces = MediaType.APPLICATION_JSON_VALUE)
   GitHubRepositorySearchResponse searchRepositories(
-      @RequestParam(QUERY_PARAMETER) final String searchQuery
+      @RequestParam(QUERY_PARAMETER) final String searchQuery,
+      @RequestParam(PER_PAGE_PARAMETER) final int pageSize,
+      @RequestParam(PAGE_PARAMETER) final int page
   );
 }

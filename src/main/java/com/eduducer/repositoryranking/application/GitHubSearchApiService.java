@@ -5,6 +5,11 @@ import java.time.LocalDate;
 
 public interface GitHubSearchApiService {
 
-  RepositoriesPopularityResponse searchAndRatePopularity(final String language, final LocalDate createdAfter);
+  RepositoriesPopularityResponse searchAndRatePopularity(
+      final String language,
+      final LocalDate createdAfter,
+      final int pageSize,
+      final int page
+  );
 
 }
