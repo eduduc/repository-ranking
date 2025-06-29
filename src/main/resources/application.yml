@@ -4,6 +4,11 @@ spring:
   mvc:
     problemdetails:
       enabled: true
+  cache:
+    type: caffeine
+    cache-names: github-repositories-cache
+    caffeine:
+      spec: recordStats,maximumSize=10,expireAfterWrite=30s
   cloud:
     openfeign:
       client:
@@ -48,6 +53,14 @@ springdoc:
   writer-with-order-by-keys: true
 
 management:
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  metrics:
+    enable:
+      cache: true
   endpoint:
     health:
       show-details: always
@@ -58,10 +71,20 @@ management:
           include: "readinessState"
         liveness:
           include: "livenessState"
+    caches:
+      access: read_only
+    prometheus:
+      access: unrestricted
+    metrics:
+      access: unrestricted
   endpoints:
     web:
       exposure:
-        include: info, health
+        include: health,info,prometheus,caches,metrics
+  prometheus:
+    metrics:
+      export:
+        enabled: true
 
 logging:
   exception-conversion-word: "%wEx"

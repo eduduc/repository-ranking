@@ -9,6 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+/**
+ * Calculates repository popularity based using configurable weights
+ */
 @Component
 public class WeightedRepositoryPopularityCalculator implements RepositoryPopularityCalculator<GitHubRepositoryItem, Popularity> {
 
@@ -26,15 +29,23 @@ public class WeightedRepositoryPopularityCalculator implements RepositoryPopular
     return new Popularity(String.valueOf(popularity), PopularityScale.TOTAL_SCORE);
   }
 
+  /**
+   * Uses the weights assigned to each popularity calculation factor (stars, forks, recency) to calculate the repository's popularity
+   * @param calculable the GitHubRepository item to calculate its popularity
+   * @return a double value indicating the popularity
+   */
   private double getPopularity(final GitHubRepositoryItem calculable) {
     LOG.atDebug().log("Calculating popularity for {}, using configuration {}", calculable, popularityCalculatorWeightsConfiguration);
     final long daysSinceUpdate = ChronoUnit.DAYS.between(calculable.updatedAt(), OffsetDateTime.now());
     final double recencyScore = 100.0 / (daysSinceUpdate + 1);
-    final double rawScore =
-        calculable.stargazersCount() * popularityCalculatorWeightsConfiguration.stars()
-            + calculable.forks() * popularityCalculatorWeightsConfiguration.forks()
-            + recencyScore * popularityCalculatorWeightsConfiguration.updatesRecency();
+    final double rawScore = getRawScore(calculable, recencyScore);
 
     return Math.round(rawScore);
+  }
+
+  private double getRawScore(final GitHubRepositoryItem calculable, final double recencyScore) {
+    return calculable.stargazersCount() * popularityCalculatorWeightsConfiguration.stars()
+        + calculable.forks() * popularityCalculatorWeightsConfiguration.forks()
+        + recencyScore * popularityCalculatorWeightsConfiguration.updatesRecency();
   }
 }

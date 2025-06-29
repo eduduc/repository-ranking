@@ -1,0 +1,383 @@
+{
+  "openapi" : "3.1.0",
+  "info" : {
+    "title" : "Repository Ranking Service API",
+    "version" : "v1.0.0"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:8080",
+    "description" : "Generated server url"
+  } ],
+  "tags" : [ {
+    "description" : "Monitor and interact",
+    "externalDocs" : {
+      "description" : "Spring Boot Actuator Web API Documentation",
+      "url" : "https://docs.spring.io/spring-boot/docs/current/actuator-api/html/"
+    },
+    "name" : "Actuator"
+  } ],
+  "paths" : {
+    "/actuator" : {
+      "get" : {
+        "operationId" : "links",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "object",
+                    "additionalProperties" : {
+                      "$ref" : "#/components/schemas/Link"
+                    }
+                  }
+                }
+              },
+              "application/vnd.spring-boot.actuator.v2+json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "object",
+                    "additionalProperties" : {
+                      "$ref" : "#/components/schemas/Link"
+                    }
+                  }
+                }
+              },
+              "application/vnd.spring-boot.actuator.v3+json" : {
+                "schema" : {
+                  "type" : "object",
+                  "additionalProperties" : {
+                    "type" : "object",
+                    "additionalProperties" : {
+                      "$ref" : "#/components/schemas/Link"
+                    }
+                  }
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "Actuator root web endpoint",
+        "tags" : [ "Actuator" ]
+      }
+    },
+    "/actuator/caches" : {
+      "get" : {
+        "operationId" : "caches",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v2+json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v3+json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "Actuator web endpoint 'caches'",
+        "tags" : [ "Actuator" ]
+      }
+    },
+    "/actuator/caches/{cache}" : {
+      "get" : {
+        "operationId" : "cache",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "cache",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "cacheManager",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v2+json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v3+json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "summary" : "Actuator web endpoint 'caches-cache'",
+        "tags" : [ "Actuator" ]
+      }
+    },
+    "/actuator/health" : {
+      "get" : {
+        "operationId" : "health",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v2+json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v3+json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "Actuator web endpoint 'health'",
+        "tags" : [ "Actuator" ]
+      }
+    },
+    "/actuator/info" : {
+      "get" : {
+        "operationId" : "info",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v2+json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v3+json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "Actuator web endpoint 'info'",
+        "tags" : [ "Actuator" ]
+      }
+    },
+    "/actuator/metrics" : {
+      "get" : {
+        "operationId" : "listNames",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v2+json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v3+json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "Actuator web endpoint 'metrics'",
+        "tags" : [ "Actuator" ]
+      }
+    },
+    "/actuator/metrics/{requiredMetricName}" : {
+      "get" : {
+        "operationId" : "metric",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "requiredMetricName",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "tag",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v2+json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              },
+              "application/vnd.spring-boot.actuator.v3+json" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          },
+          "404" : {
+            "description" : "Not Found"
+          }
+        },
+        "summary" : "Actuator web endpoint 'metrics-requiredMetricName'",
+        "tags" : [ "Actuator" ]
+      }
+    },
+    "/actuator/prometheus" : {
+      "get" : {
+        "operationId" : "scrape",
+        "parameters" : [ {
+          "in" : "query",
+          "name" : "format",
+          "schema" : {
+            "type" : "string",
+            "enum" : [ "CONTENT_TYPE_004", "CONTENT_TYPE_OPENMETRICS_100", "CONTENT_TYPE_PROTOBUF" ]
+          }
+        }, {
+          "in" : "query",
+          "name" : "includedNames",
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/openmetrics-text;version=1.0.0;charset=utf-8" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              },
+              "application/vnd.google.protobuf;proto=io.prometheus.client.MetricFamily;encoding=delimited" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              },
+              "text/plain;version=0.0.4;charset=utf-8" : {
+                "schema" : {
+                  "type" : "object"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "Actuator web endpoint 'prometheus'",
+        "tags" : [ "Actuator" ]
+      }
+    },
+    "/api/v1/repositories/popularity" : {
+      "get" : {
+        "description" : "Returns a list of repositories, each one with a calculated popularity score",
+        "operationId" : "repositoriesPopularity",
+        "parameters" : [ {
+          "description" : "Search repositories by this programming language",
+          "example" : "java",
+          "in" : "query",
+          "name" : "programming-language",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "minLength" : 1
+          }
+        }, {
+          "description" : "Search repositories created after this date",
+          "example" : "2023-01-01",
+          "in" : "query",
+          "name" : "created-after",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : { }
+            },
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "content" : {
+              "application/problem+json" : { }
+            },
+            "description" : "Invalid parameters"
+          },
+          "500" : {
+            "content" : {
+              "application/problem+json" : { }
+            },
+            "description" : "Internal server error"
+          }
+        },
+        "summary" : "Search repositories and calculate popularity",
+        "tags" : [ "Repositories" ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Link" : {
+        "type" : "object",
+        "properties" : {
+          "href" : {
+            "type" : "string"
+          },
+          "templated" : {
+            "type" : "boolean"
+          }
+        }
+      }
+    }
+  }
+}
