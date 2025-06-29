@@ -19,6 +19,12 @@ spring:
               User-Agent: ${spring.application.name}
               Authorization: Bearer ${GITHUB_SEARCH_API_ACCESS_TOKEN} # Could configure Spring Security to get an application-token
 
+repository-ranking:
+  popularity-weights:
+    stars: 5
+    forks: 2
+    updates-recency: 8
+
 springdoc:
   show-actuator: true
   cache:

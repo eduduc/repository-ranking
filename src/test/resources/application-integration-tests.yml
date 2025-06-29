@@ -12,12 +12,18 @@ spring:
             url: http://localhost:${wiremock.server.port}
             connect-timeout: 2000
             read-timeout: 2000
-            logger-level: FULL
+            logger-level: BASIC
             default-request-headers:
               Accept: application/vnd.github+json
               X-GitHub-Api-Version: 2022-11-28
               User-Agent: ${spring.application.name}
               Authorization: Bearer sample-token # Could configure Spring Security to get an application-token
+
+repository-ranking:
+  popularity-weights:
+    stars: 5
+    forks: 2
+    updates-recency: 8
 
 springdoc:
   show-actuator: true
@@ -35,7 +41,7 @@ logging:
   level:
     com.eduducer.repositoryranking.adapter.outbound.github: DEBUG
     org.springframework.web: INFO
-    org.springframework.cloud.openfeign: DEBUG
+    org.springframework.cloud.openfeign: INFO
   pattern:
     console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m %clr(%marker){blue}%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"
     file: "%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${PID:- } --- [%t] %-40.40logger{39} : %m %marker%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"

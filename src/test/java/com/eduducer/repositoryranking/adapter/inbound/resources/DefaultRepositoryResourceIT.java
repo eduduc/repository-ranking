@@ -64,7 +64,7 @@ class DefaultRepositoryResourceIT {
           .andExpect(jsonPath("$.items").isArray())
           .andExpect(jsonPath("$.items[0].fullName").value("Stirling-Tools/Stirling-PDF"))
           .andExpect(jsonPath("$.items[0].language").value("Java"))
-          .andExpect(jsonPath("$.items[0].calculatedPopularity.value").value("68036"))
+          .andExpect(jsonPath("$.items[0].calculatedPopularity.value").value("325077.0"))
           .andExpect(jsonPath("$.items[0].calculatedPopularity.popularityScale").value("TOTAL_SCORE"));
     }
 
