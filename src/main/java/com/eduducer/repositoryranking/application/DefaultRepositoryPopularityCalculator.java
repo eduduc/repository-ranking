@@ -1,7 +1,6 @@
-package com.eduducer.repositoryranking.adapter.outbound.github.mapper.decorator;
+package com.eduducer.repositoryranking.application;
 
 import com.eduducer.repositoryranking.adapter.outbound.github.model.GitHubRepositoryItem;
-import com.eduducer.repositoryranking.application.RepositoryPopularityCalculator;
 import com.eduducer.repositoryranking.domain.Popularity;
 import com.eduducer.repositoryranking.domain.Popularity.PopularityScale;
 import java.time.OffsetDateTime;
