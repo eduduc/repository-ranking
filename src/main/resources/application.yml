@@ -14,7 +14,7 @@ spring:
       client:
         config:
           github-search-api:
-            url: ${GITHUB_SEARCH_API_BASE_URL}
+            url: ${GITHUB_SEARCH_API_BASE_URL:https://api.github.com}
             connect-timeout: ${GITHUB_SEARCH_API_CONNECT_TIMEOUT:2000}
             read-timeout: ${GITHUB_SEARCH_API_READ_TIMEOUT:4000}
             logger-level: ${GITHUB_SEARCH_API_LOG_LEVEL:BASIC}
