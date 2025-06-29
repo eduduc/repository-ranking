@@ -47,6 +47,8 @@ To get a GitHub Token, take a look [here](https://docs.github.com/en/authenticat
 Here list the improvements I would do:
 
 - the handling of the pagination, I would improve it to use the `links` header as described [here](https://docs.github.com/en/rest/using-the-rest-api/using-pagination-in-the-rest-api?apiVersion=2022-11-28)
+- security of the exposed endpoints
+- feign error decoder, for other errors: 401, 403, 422, 429, etc
 - rate limiter, circuit-breaker weren't added to this implementation
 - the cache is in memory (Caffeine), I would use a better provider, i.e. Redis, Memcached, Hazelcast, etc
 - a [GitHub Actions](https://github.com/features/actions) pipeline could be configured for CI/CD
