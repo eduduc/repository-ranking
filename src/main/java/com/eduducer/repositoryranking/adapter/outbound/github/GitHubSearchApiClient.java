@@ -1,6 +1,7 @@
 package com.eduducer.repositoryranking.adapter.outbound.github;
 
 import com.eduducer.repositoryranking.adapter.outbound.github.model.GitHubRepositorySearchResponse;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface GitHubSearchApiClient {
 
   @GetMapping(value = "/search/repositories", produces = MediaType.APPLICATION_JSON_VALUE)
+  @Retry(name = "gitHubRepositorySearchApi")
   GitHubRepositorySearchResponse searchRepositories(
       @RequestParam("q") final String searchQuery
   );
