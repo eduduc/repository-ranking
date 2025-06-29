@@ -1,5 +1,11 @@
-FROM openjdk:21-slim
+FROM openjdk:21-jdk-slim
+
 RUN mkdir /app
-COPY target/repository-ranking-*.jar ./repository-ranking.jar
-ENTRYPOINT exec java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -Duser.timezone=GMT -Dserver.port=8080 $JAVA_AGENT -jar /repository-ranking.jar
+
+WORKDIR /app
+
+COPY target/repository-ranking-*.jar /app/repository-ranking.jar
+
 EXPOSE 8080
+
+ENTRYPOINT ["java", "-jar", "repository-ranking.jar"]
