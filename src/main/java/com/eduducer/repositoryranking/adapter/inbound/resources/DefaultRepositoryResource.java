@@ -26,7 +26,7 @@ public class DefaultRepositoryResource implements RepositoryResource {
   @Override
   public RepositoriesPopularityResponse repositoriesPopularity(
       @RequestParam(value = "programming-language") final String programmingLanguage,
-      @RequestParam(value = "created-after", defaultValue = "") final LocalDate createdAfter,
+      @RequestParam(value = "created-after", required = false) final LocalDate createdAfter,
       @RequestParam(value = "page-size", defaultValue = "30") final int pageSize,
       @RequestParam(value = "page", defaultValue = "1") final int page
   ) {
