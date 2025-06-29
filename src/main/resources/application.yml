@@ -36,6 +36,22 @@ springdoc:
   writer-with-default-pretty-printer: true
   writer-with-order-by-keys: true
 
+management:
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+      group:
+        readiness:
+          include: "readinessState"
+        liveness:
+          include: "livenessState"
+  endpoints:
+    web:
+      exposure:
+        include: info, health
+
 logging:
   exception-conversion-word: "%wEx"
   level:
