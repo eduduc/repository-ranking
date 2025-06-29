@@ -25,6 +25,17 @@ repository-ranking:
     forks: 2
     updates-recency: 8
 
+resilience4j.retry:
+  instances:
+    gitHubRepositorySearchApi:
+      maxAttempts: 3
+      waitDuration: 10s
+      enableExponentialBackoff: true
+      exponentialBackoffMultiplier: 2
+      retryExceptions:
+        - org.springframework.web.client.HttpServerErrorException
+        - java.io.IOException
+
 springdoc:
   show-actuator: true
   cache:
