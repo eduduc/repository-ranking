@@ -28,9 +28,15 @@ public class DefaultGitHubSearchApiService implements GitHubSearchApiService {
   }
 
   @Override
-  public RepositoriesPopularityResponse searchAndRatePopularity(final String language, final LocalDate createdAfter) {
-    LOG.atInfo().log("Searching for repositories popularity for language: '{}', createdAfter: '{}'", language, createdAfter);
+  public RepositoriesPopularityResponse searchAndRatePopularity(
+      final String language,
+      final LocalDate createdAfter,
+      final int pageSize,
+      final int page
+  ) {
+    LOG.atInfo().log("Searching for repositories popularity for language: '{}', createdAfter: '{}', pageSize: {}, page: {}",
+        language, createdAfter, pageSize, page);
     final var searchQuery = gitHubSearchQueryBuilder.buildSearchQuery(language, createdAfter);
-    return gitHubRepositorySearchResponseMapper.map(gitHubSearchApiClient.searchRepositories(searchQuery));
+    return gitHubRepositorySearchResponseMapper.map(gitHubSearchApiClient.searchRepositories(searchQuery, pageSize, page));
   }
 }

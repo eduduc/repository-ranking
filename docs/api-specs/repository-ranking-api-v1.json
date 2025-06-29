@@ -339,6 +339,32 @@
             "type" : "string",
             "format" : "date"
           }
+        }, {
+          "description" : "The number of repositories to retrieve per page",
+          "example" : 30,
+          "in" : "query",
+          "name" : "page-size",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 30,
+            "exclusiveMinimum" : 0,
+            "maximum" : 100,
+            "minimum" : 1
+          }
+        }, {
+          "description" : "The page number",
+          "example" : 1,
+          "in" : "query",
+          "name" : "page",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 1,
+            "exclusiveMinimum" : 0
+          }
         } ],
         "responses" : {
           "200" : {

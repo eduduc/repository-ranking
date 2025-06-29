@@ -1,6 +1,7 @@
 package com.eduducer.repositoryranking.adapter.inbound.resources;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.times;
@@ -49,7 +50,7 @@ class DefaultRepositoryResourceTest {
   void repositoriesPopularity() throws Exception {
     final var response = new RepositoriesPopularityResponse(23, getRepositoryItems());
 
-    when(gitHubSearchApiService.searchAndRatePopularity(anyString(), any())).thenReturn(response);
+    when(gitHubSearchApiService.searchAndRatePopularity(anyString(), any(), anyInt(), anyInt())).thenReturn(response);
 
     mockMvc.perform(
             get("/api/v1/repositories/popularity")
@@ -62,7 +63,8 @@ class DefaultRepositoryResourceTest {
         .andExpect(jsonPath("$.items").isArray());
 
     final var expectedLocalDate = LocalDate.of(2017, 6, 13);
-    verify(gitHubSearchApiService, times(1)).searchAndRatePopularity("kotlin", expectedLocalDate);
+    verify(gitHubSearchApiService, times(1))
+        .searchAndRatePopularity("kotlin", expectedLocalDate, 30, 1);
   }
 
   @ParameterizedTest
@@ -79,7 +81,7 @@ class DefaultRepositoryResourceTest {
         .andExpect(jsonPath("$.title").value("Bad Request"))
         .andExpect(jsonPath("$.status").value(HttpStatus.BAD_REQUEST.value()));
 
-    verify(gitHubSearchApiService, times(0)).searchAndRatePopularity(anyString(), any());
+    verify(gitHubSearchApiService, times(0)).searchAndRatePopularity(anyString(), any(), anyInt(), anyInt());
   }
 
   @Test
@@ -95,13 +97,46 @@ class DefaultRepositoryResourceTest {
         .andExpect(jsonPath("$.title").value("Bad Request"))
         .andExpect(jsonPath("$.status").value(HttpStatus.BAD_REQUEST.value()));
 
-    verify(gitHubSearchApiService, times(0)).searchAndRatePopularity(anyString(), any());
+    verify(gitHubSearchApiService, times(0)).searchAndRatePopularity(anyString(), any(), anyInt(), anyInt());
+  }
+
+  @Test
+  @DisplayName("Badly formatted 'page-size' parameter results in Bad Request response")
+  void wrongPageSizeFormatBadRequestResponse() throws Exception {
+    mockMvc.perform(
+            get("/api/v1/repositories/popularity")
+                .param("programming-language", "ruby")
+                .param("page-size", "800")
+        )
+        .andExpect(status().isBadRequest())
+        .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE))
+        .andExpect(jsonPath("$.title").value("Bad Request"))
+        .andExpect(jsonPath("$.status").value(HttpStatus.BAD_REQUEST.value()));
+
+    verify(gitHubSearchApiService, times(0)).searchAndRatePopularity(anyString(), any(), anyInt(), anyInt());
+  }
+
+  @Test
+  @DisplayName("Badly formatted 'page' parameter results in Bad Request response")
+  void wrongPageFormatBadRequestResponse() throws Exception {
+    mockMvc.perform(
+            get("/api/v1/repositories/popularity")
+                .param("programming-language", "ruby")
+                .param("page", "ABCD")
+        )
+        .andExpect(status().isBadRequest())
+        .andExpect(content().contentType(MediaType.APPLICATION_PROBLEM_JSON_VALUE))
+        .andExpect(jsonPath("$.title").value("Bad Request"))
+        .andExpect(jsonPath("$.status").value(HttpStatus.BAD_REQUEST.value()));
+
+    verify(gitHubSearchApiService, times(0)).searchAndRatePopularity(anyString(), any(), anyInt(), anyInt());
   }
 
   @Test
   @DisplayName("Exceptions thrown from service layers result in Internal Server Error response")
   void serviceExceptionInternalServerErrorResponse() throws Exception {
-    when(gitHubSearchApiService.searchAndRatePopularity(anyString(), any())).thenThrow(new RuntimeException("Something went wrong"));
+    when(gitHubSearchApiService.searchAndRatePopularity(anyString(), any(), anyInt(), anyInt()))
+        .thenThrow(new RuntimeException("Something went wrong"));
 
     mockMvc.perform(
             get("/api/v1/repositories/popularity")
@@ -112,7 +147,7 @@ class DefaultRepositoryResourceTest {
         .andExpect(jsonPath("$.title").value("Internal Server Error"))
         .andExpect(jsonPath("$.status").value(HttpStatus.INTERNAL_SERVER_ERROR.value()));
 
-    verify(gitHubSearchApiService, times(1)).searchAndRatePopularity(anyString(), isNull());
+    verify(gitHubSearchApiService, times(1)).searchAndRatePopularity(anyString(), isNull(), anyInt(), anyInt());
   }
 
 

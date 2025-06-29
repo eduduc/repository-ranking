@@ -7,7 +7,10 @@ import org.springframework.util.StringUtils;
 @Component
 public class GitHubSearchQueryBuilder {
 
-  public String buildSearchQuery(final String language, final LocalDate createdAfter) {
+  public String buildSearchQuery(
+      final String language,
+      final LocalDate createdAfter
+  ) {
     if (!StringUtils.hasText(language)) {
       throw new IllegalArgumentException("Language must not be blank!");
     }
