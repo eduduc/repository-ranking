@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  backend:
+    image: 'docker-repository-ranking:latest'
+    container_name: repository-ranking-backend
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    environment:
+      - GITHUB_SEARCH_API_BASE_URL=https://api.github.com
+      - GITHUB_SEARCH_API_ACCESS_TOKEN=${GITHUB_SEARCH_API_ACCESS_TOKEN}
