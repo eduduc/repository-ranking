@@ -127,10 +127,8 @@ class DefaultRepositoryResourceTest {
 
     RepositoryHostingUser owner1 = new RepositoryHostingUser(
         "u123",
-        "Alice Doe",
         "https://github.com/alice",
         "alice",
-        "alice@example.com",
         "https://avatars.github.com/alice.png",
         "User",
         "GitHub"
@@ -138,10 +136,8 @@ class DefaultRepositoryResourceTest {
 
     RepositoryHostingUser owner2 = new RepositoryHostingUser(
         "u456",
-        "Bob Smith",
         "https://github.com/bob",
         "bob",
-        "bob@example.com",
         "https://avatars.github.com/bob.png",
         "User",
         "GitHub"

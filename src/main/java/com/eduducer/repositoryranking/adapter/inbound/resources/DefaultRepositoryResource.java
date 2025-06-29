@@ -26,7 +26,7 @@ public class DefaultRepositoryResource implements RepositoryResource {
   @Override
   public RepositoriesPopularityResponse repositoriesPopularity(
       @RequestParam(value = "programming-language") final String programmingLanguage,
-      @RequestParam(value = "created-after") final LocalDate createdAfter
+      @RequestParam(value = "created-after", defaultValue = "") final LocalDate createdAfter
   ) {
     return gitHubSearchApiService.searchAndRatePopularity(programmingLanguage, createdAfter);
   }

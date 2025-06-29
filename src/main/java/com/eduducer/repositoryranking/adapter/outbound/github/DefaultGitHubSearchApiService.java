@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class DefaultGitHubSearchApiService implements GitHubSearchApiService {
 
-  private static final Logger logger = LoggerFactory.getLogger(DefaultGitHubSearchApiService.class);
+  private static final Logger LOG = LoggerFactory.getLogger(DefaultGitHubSearchApiService.class);
 
   private final GitHubSearchQueryBuilder gitHubSearchQueryBuilder;
   private final GitHubSearchApiClient gitHubSearchApiClient;
@@ -29,7 +29,7 @@ public class DefaultGitHubSearchApiService implements GitHubSearchApiService {
 
   @Override
   public RepositoriesPopularityResponse searchAndRatePopularity(final String language, final LocalDate createdAfter) {
-    logger.atInfo().log("Searching for repositories popularity for language: '{}', createdAfter: '{}", language, createdAfter);
+    LOG.atInfo().log("Searching for repositories popularity for language: '{}', createdAfter: '{}'", language, createdAfter);
     final var searchQuery = gitHubSearchQueryBuilder.buildSearchQuery(language, createdAfter);
     return gitHubRepositorySearchResponseMapper.map(gitHubSearchApiClient.searchRepositories(searchQuery));
   }
